@@ -70,7 +70,7 @@ public class Employees{
 	public int getId() {
 		return id;
 	}
-
+//formats string for displaying
 	@Override
 	public String toString() {
 //		return "Employee [id= " + id + ", First name= " + first_name + ", Last name= "+ last_name +", "

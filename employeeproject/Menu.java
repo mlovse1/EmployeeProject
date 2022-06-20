@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 import com.misha.jump.employeeproject.*;
 import com.misha.jump.exceptions.IdExistsException;
 import com.misha.jump.exceptions.NoEmployeeException;
@@ -19,6 +20,8 @@ import com.misha.jump.exceptions.NonNegativeException;
 import com.misha.jump.exceptions.YesorNoException;
 
 public class Menu {
+	
+	//imported Id count so that when adding an employee, they were sequential
 	int getIDCount = Employees.idCounter;
 	private static final int options = 7;
 
@@ -53,6 +56,8 @@ public class Menu {
 		System.out.println("==========================================================");
 		System.out.println("=            Please chooose an option?                   =");
 		System.out.println("==========================================================");
+		System.out.println();
+		
 
 		while (cond) {
 			listOptions();
@@ -72,6 +77,9 @@ public class Menu {
 				updateEmployee(employeeSet, scan);
 				break;
 			case 5:
+				getEmployeeDept(employeeSet, scan);
+				break;	
+			case 6:
 				System.out.println("Thank you! Have a great day!");
 				endOfProgram(employeeSet, file);
 				cond = false;
@@ -79,7 +87,7 @@ public class Menu {
 			}
 		}
 	}
-
+//console menu options
 	private static void listOptions() {
 
 		System.out.println("========================OPTIONS===========================");
@@ -89,7 +97,8 @@ public class Menu {
 		System.out.println("2: Add an Employee");
 		System.out.println("3: Remove an Employee.");
 		System.out.println("4: Update an Employee.");
-		System.out.println("5: Exit Management Software.");
+		System.out.println("5: Display Departments. ");
+		System.out.println("6: Exit Management Software.");
 		System.out.println("==========================================================");
 		System.out.println("==========================================================");
 		System.out.println();
@@ -126,7 +135,8 @@ public class Menu {
 		}
 		return optionHolder;
 	}
-
+//method to list all employees
+	//uses forEach(System.out::println) syntax
 	private static void listAllEmployees(ArrayList<Employees> employeeSet, Scanner scan) {
 		System.out.println();
 		System.out.println("Employee List: ");
@@ -134,8 +144,20 @@ public class Menu {
 		
 					
 	}
+//Example of a stream that shows the departments that have employees
+	private static void getEmployeeDept(ArrayList<Employees>employeeSet, Scanner scan) {
 
-
+		String allDepartments = employeeSet.stream()
+				.collect(Collectors.groupingBy(Employees::getDepartment))
+				.keySet()
+				.stream()
+				.reduce((e1, e2)-> (e1 + " | " + e2)).get();
+		
+		System.out.println(allDepartments);
+	}
+	
+	
+	//method to add employees
 	private static void addEmployee(ArrayList<Employees> employeeSet, Scanner scan) {
 		int getIDCount = Employees.idCounter;
 		System.out.println("What is the First Name of the Employee that you will be adding?");
@@ -154,6 +176,7 @@ public class Menu {
 		
 	}
 
+	//method to check that the integer entered fall within the expected parameters
 	private static int getValidInt(Scanner scan) {
 		boolean cond = true;
 		int holder = 0;
@@ -169,6 +192,8 @@ public class Menu {
 		return holder;
 	}
 
+	
+	//allows user to delete employee by id number
 	private static void deleteEmployee(ArrayList<Employees> employeeSet, Scanner scan) {
 
 		System.out.println("What is the ID of the Employee that you would like to remove?");
@@ -179,6 +204,8 @@ public class Menu {
 
 	}
 
+	//gets information of employee by id number
+	//used in updating and deleting
 	private static int searchEmployeeID(ArrayList<Employees> employeeSet, Scanner scan) {
 		int address = -1;
 		boolean cond = false;
@@ -204,6 +231,8 @@ public class Menu {
 		return address;
 	}
 
+	
+	//allows you to update the information of the employee by employee id
 	private static void updateEmployee(ArrayList<Employees> employeeSet, Scanner scan) {
 		System.out.println("What is the ID of the Employee " + "that you would like to update?");
 		int address = searchEmployeeID(employeeSet, scan);
@@ -262,6 +291,7 @@ public class Menu {
 	}
 
 //validation methods
+	//checks that user entering entries accepts the entered data
 	private static String getStringValidated(String string, Scanner scan) {
 		String holder = null;
 		char acceptance;
@@ -280,6 +310,8 @@ public class Menu {
 		return holder;
 	}
 
+	
+	//allows user to select Yes or No to proceed with entering the data they entered
 	private static char getYorN(Scanner scan) {
 		boolean cond = false;
 		char acceptance = 'l';
