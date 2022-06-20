@@ -1,0 +1,4 @@
+1, Misha, Smith, 2212021, 60000, Tech
+2, John, Jones, 010101, 40000, Cook
+3, Joseph, Jones, 05062022, 60000, TECH
+4, Eduardo, Torres, 07212019, 70000, CTO
