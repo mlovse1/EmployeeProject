@@ -1,4 +1,5 @@
 package com.misha.jump.exceptions;
+//Exception for when trying to delete an employee that does not exist
 
 public class NoEmployeeException extends Exception {
 	
